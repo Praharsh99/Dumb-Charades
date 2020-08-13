@@ -1,72 +1,32 @@
-import React from "react";
+import React from 'react';
 
-import "./chat-section.styles.css";
+import BlurredBox from '../blurred-box/blurred-box.component.jsx';
+import InputBar from '../input-bar/input-bar.component.jsx';
+
+import './chat-section.styles.css';
 
 function ChatSection() {
   return (
     <div className="chatSection">
-      <div className="chatSection__messagesContainer">
-        <div className="chatSection__messages-fix">
-          <div className="chatSection__messages">
+      <BlurredBox width="100%" height="80%">
+        <div className="chatSection__messagesSection">
+          <div className="chatSection__messagesContainer">
             <div className="chatSection__message chatSection__message-mine">
-              <span>Hello</span>
-            </div>
-            <div className="chatSection__message chatSection__message-other">
-              <span>Hii</span>
-            </div>
-            <div className="chatSection__message chatSection__message-mine">
-              <span>Where are you?</span>
-            </div>
-            <div className="chatSection__message chatSection__message-other">
-              <span>I'm at the bottom of the lake</span>
-            </div>
-            <div className="chatSection__message chatSection__message-mine">
-              <span>Hello</span>
-            </div>
-            <div className="chatSection__message chatSection__message-other">
-              <span>Hii</span>
-            </div>
-            <div className="chatSection__message chatSection__message-mine">
-              <span>Where are you?</span>
-            </div>
-            <div className="chatSection__message chatSection__message-other">
-              <span>I'm at the bottom of the lake</span>
-            </div>
-            <div className="chatSection__message chatSection__message-mine">
-              <span>Hello</span>
-            </div>
-            <div className="chatSection__message chatSection__message-other">
-              <span>Hii</span>
-            </div>
-            <div className="chatSection__message chatSection__message-mine">
-              <span>Where are you?</span>
-            </div>
-            <div className="chatSection__message chatSection__message-other">
-              <span>I'm at the bottom of the lake</span>
-            </div>
-            <div className="chatSection__message chatSection__message-mine">
-              <span>Hello</span>
-            </div>
-            <div className="chatSection__message chatSection__message-other">
-              <span>Hii</span>
-            </div>
-            <div className="chatSection__message chatSection__message-mine">
-              <span>Where are you?</span>
-            </div>
-            <div className="chatSection__message chatSection__message-other">
-              <span>I'm at the bottom of the lake</span>
+              <span>Praharsh</span>
             </div>
           </div>
         </div>
-      </div>
+      </BlurredBox>
 
-      <div className="chatSection__input">
-        <input
-          type="text"
-          placeholder="Enter your message here..."
-          maxLength="126"
-        />
-      </div>
+      <InputBar
+        type="text"
+        width="100%"
+        height="12%"
+        placeholder="Enter your message here..."
+        maxLength="126"
+        fontSize="20px"
+        paddingTop="40px"
+      />
     </div>
   );
 }

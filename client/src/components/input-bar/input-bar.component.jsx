@@ -1,30 +1,33 @@
-import React, { useState } from "react";
+import React from 'react';
 
-import "./input-bar.styles.css";
+import './input-bar.styles.css';
 
-function InputBar() {
-  const [word, setWord] = useState("");
-
-  const handleChange = (e) => {
-    setWord(e.target.value);
+function InputBar({
+  width,
+  height,
+  maxLength,
+  placeholder,
+  fontSize,
+  paddingTop,
+}) {
+  const styleDiv = {
+    width,
+    height,
   };
 
-  const handleKeyDown = (e) => {
-    if (e.keyCode === 13 && e.target.value.trim().length > 0) {
-      console.log("Hello");
-    }
+  const styleInput = {
+    fontSize,
+    paddingTop,
   };
 
   return (
-    <div className="inputBar">
+    <div className="inputBar" style={styleDiv}>
       <div className="inputBar__section">
         <input
           type="text"
-          value={word}
-          onChange={handleChange}
-          placeholder="Enter word here..."
-          maxLength="64"
-          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          maxLength={maxLength}
+          style={styleInput}
         />
       </div>
     </div>

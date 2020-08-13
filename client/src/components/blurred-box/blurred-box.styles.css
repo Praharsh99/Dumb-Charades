@@ -1,0 +1,18 @@
+.blurredBox {
+  position: relative;
+  background: url('http://bit.ly/2gPLxZ4');
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.blurredBox::after {
+  content: '';
+  width: 120%;
+  height: 120%;
+  top: -25px;
+  left: -25px;
+  background: inherit;
+  position: absolute;
+  box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.02);
+  filter: blur(15px);
+}
