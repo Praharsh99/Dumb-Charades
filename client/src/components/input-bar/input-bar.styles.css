@@ -1,0 +1,47 @@
+.inputBar {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputBar__section {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputBar__section > input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-size: 55px;
+  padding-top: 60px;
+  background: transparent;
+  border: none;
+  outline: none;
+  letter-spacing: 1.2px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  transition: border 0.2s ease-out;
+}
+
+.inputBar__section > input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.inputBar__section > input:placeholder-shown {
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.inputBar__section > input:focus {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+}
+
+.inputBar__section > input:focus::placeholder {
+  color: transparent;
+}
