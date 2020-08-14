@@ -34,11 +34,7 @@ function ChatSection({ socket, setNewChatMessage, messages }) {
   });
 
   const handleChange = (e) => {
-    const value = e.target.value;
-
-    if (value.length > 0) {
-      setChatMessage(value);
-    }
+    setChatMessage(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -68,7 +64,7 @@ function ChatSection({ socket, setNewChatMessage, messages }) {
             className="chatSection__messagesContainer"
             ref={messageContainer}
           >
-            {messages ? (
+            {messages.length ? (
               messages.map((message) => (
                 <div
                   className={`chatSection__message chatSection__message-${message.whos}`}
@@ -78,7 +74,7 @@ function ChatSection({ socket, setNewChatMessage, messages }) {
                 </div>
               ))
             ) : (
-              <span>Nothing there!</span>
+              <span className="chatSection__emptyContainer">No messages!</span>
             )}
           </div>
         </div>

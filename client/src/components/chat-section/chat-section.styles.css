@@ -63,6 +63,16 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+.chatSection__emptyContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+}
+
 /* Container for the message */
 .chatSection__message {
   display: flex;

@@ -3,10 +3,9 @@ import React, { useEffect } from 'react';
 
 import io from 'socket.io-client';
 
+import AppLeft from './components/app-left/app-left.component.jsx';
 import AppCenter from './components/app-center/app-center.component.jsx';
 import AppRight from './components/app-right/app-right.component.jsx';
-import PointsTable from './components/points-table/points-table.component.jsx';
-import MemoryBox from './components/memory-box/memory-box.component.jsx';
 
 import './App.css';
 
@@ -20,10 +19,7 @@ function App() {
 
   return (
     <div className="app">
-      <div className="app__left">
-        <PointsTable />
-        <MemoryBox />
-      </div>
+      <AppLeft />
 
       <AppCenter socket={socket} />
 
