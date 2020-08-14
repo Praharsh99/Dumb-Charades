@@ -6,7 +6,7 @@ import './points-table.styles.css';
 
 function PointsTable() {
   return (
-    <BlurredBox width="100%" height="50%">
+    <BlurredBox width="100%" height="20%">
       <div className="pointsTable__content">
         <header className="pointsTable__header">
           <div>Team A</div>
@@ -15,10 +15,10 @@ function PointsTable() {
 
         <div className="pointsTable__body">
           <div className="pointsTable__side">
-            <div>Side 1</div>
+            <div>10</div>
           </div>
           <div className="pointsTable__side">
-            <div>Side 1</div>
+            <div>10</div>
           </div>
         </div>
       </div>

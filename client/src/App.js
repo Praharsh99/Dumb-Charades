@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+// import { connect } from 'react-redux';
 
 import io from 'socket.io-client';
 
+import AppCenter from './components/app-center/app-center.component.jsx';
+import AppRight from './components/app-right/app-right.component.jsx';
 import PointsTable from './components/points-table/points-table.component.jsx';
 import MemoryBox from './components/memory-box/memory-box.component.jsx';
-import DisplaySection from './components/display-section/display-section.component.jsx';
-import InputBar from './components/input-bar/input-bar.component.jsx';
-import ChatSection from './components/chat-section/chat-section.component.jsx';
 
 import './App.css';
 
+// Socket initialization
+const socket = io.connect('http://localhost:8000');
+
 function App() {
+  useEffect(() => {
+    socket.emit('new-connection');
+  }, []);
+
   return (
     <div className="app">
       <div className="app__left">
@@ -18,23 +25,17 @@ function App() {
         <MemoryBox />
       </div>
 
-      <div className="app__center">
-        <DisplaySection />
-        <InputBar
-          width="100%"
-          height="20%"
-          placeholder="Enter word here..."
-          maxLength="64"
-          fontSize="55px"
-          paddingTop="50px"
-        />
-      </div>
+      <AppCenter socket={socket} />
 
-      <div className="app__right">
-        <ChatSection />
-      </div>
+      <AppRight socket={socket} />
     </div>
   );
 }
 
+// const mapStateToProps = (state) => {
+//   console.log('In main App, ', state);
+//   return {};
+// };
+
+// export default connect(mapStateToProps)(App);
 export default App;

@@ -1,32 +1,42 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
-const path = require("path");
-const dotenv = require("dotenv");
+const path = require('path');
+const dotenv = require('dotenv');
+
+const { addNewMessage } = require('./messages');
 
 // Configuring env variables
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: './config.env' });
 
 // Global Variables
 const PORT = process.env.PORT || 8000;
 
 // Middlewares
 // Setting up the static files for REACT
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
 
 // Socket.io
-io.on("connection", (socket) => {});
+io.on('connection', (socket) => {
+  console.log('New Connection: ', socket.id);
+
+  socket.on('new-chat-message', (messageObj) => {
+    const newMessageObj = addNewMessage(messageObj, socket.id);
+
+    socket.broadcast.emit('new-chat-message', newMessageObj);
+  });
+});
 
 // Server initialization
 http.listen(PORT, () => {
-  console.log("Server initialized at port: " + PORT);
+  console.log('Server initialized at port: ' + PORT);
 });

@@ -9,6 +9,8 @@ function InputBar({
   placeholder,
   fontSize,
   paddingTop,
+  value,
+  handleChange,
 }) {
   const styleDiv = {
     width,
@@ -25,9 +27,11 @@ function InputBar({
       <div className="inputBar__section">
         <input
           type="text"
+          value={value}
           placeholder={placeholder}
           maxLength={maxLength}
           style={styleInput}
+          onChange={handleChange}
         />
       </div>
     </div>
