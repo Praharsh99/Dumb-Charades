@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import BlurredBox from './../blurred-box/blurred-box.component.jsx';
@@ -10,6 +10,11 @@ import './memory-box.styles.css';
 
 function MemoryBox({ setNewMemoryWord, words }) {
   const [word, setWord] = useState('');
+  const wordsContainer = useRef(null);
+
+  useEffect(() => {
+    wordsContainer.current.scrollTo(0, wordsContainer.current.scrollHeight);
+  });
 
   const handleChange = (e) => {
     setWord(e.target.value);
@@ -18,10 +23,12 @@ function MemoryBox({ setNewMemoryWord, words }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setNewMemoryWord(word.trim());
-    setWord('');
+    if (word.trim().length > 0) {
+      setNewMemoryWord(word.trim());
+      setWord('');
 
-    e.target.focus();
+      e.target.focus();
+    }
   };
 
   return (
@@ -32,7 +39,7 @@ function MemoryBox({ setNewMemoryWord, words }) {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Remember word here..."
+              placeholder="Remember your words here..."
               value={word}
               onChange={handleChange}
             />
@@ -40,7 +47,7 @@ function MemoryBox({ setNewMemoryWord, words }) {
         </div>
 
         {/* words that were stored */}
-        <div className="memoryBox__wordsContainer">
+        <div className="memoryBox__wordsContainer" ref={wordsContainer}>
           {words.length ? (
             words.map((word, idx) => (
               <div className="memoryBox__word" key={idx}>

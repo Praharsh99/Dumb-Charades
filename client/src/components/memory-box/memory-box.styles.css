@@ -57,7 +57,7 @@
 }
 
 .memoryBox__wordsContainer::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
   background: transparent;
 }
 

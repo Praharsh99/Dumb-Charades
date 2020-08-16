@@ -1,0 +1,16 @@
+.gameActionButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gameActionButtons button {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  color: #000;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}

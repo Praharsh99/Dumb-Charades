@@ -2,10 +2,9 @@ import React from 'react';
 
 import './blurred-box.styles.css';
 
-function BlurredBox({ children, width, height }) {
+function BlurredBox({ children, ...otherProps }) {
   const style = {
-    width,
-    height,
+    ...otherProps,
   };
 
   return (

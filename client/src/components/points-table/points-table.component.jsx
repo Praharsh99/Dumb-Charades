@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import BlurredBox from '../blurred-box/blurred-box.component.jsx';
 
+import { selectPoints } from './../../redux/game/game.selectors';
+
 import './points-table.styles.css';
 
-function PointsTable() {
+function PointsTable({ points }) {
   return (
     <BlurredBox width="100%" height="20%">
       <div className="pointsTable__content">
@@ -14,16 +17,19 @@ function PointsTable() {
         </header>
 
         <div className="pointsTable__body">
-          <div className="pointsTable__side">
-            <div>10</div>
-          </div>
-          <div className="pointsTable__side">
-            <div>10</div>
-          </div>
+          {points.map((point, idx) => (
+            <div className="pointsTable__side" key={idx}>
+              <div>{point}</div>
+            </div>
+          ))}
         </div>
       </div>
     </BlurredBox>
   );
 }
 
-export default PointsTable;
+const mapStateToProps = (state) => ({
+  points: selectPoints(state),
+});
+
+export default connect(mapStateToProps)(PointsTable);

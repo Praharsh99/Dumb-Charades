@@ -10,6 +10,7 @@ function InputBar({
   fontSize,
   paddingTop,
   value,
+  isDisabled,
   handleChange,
 }) {
   const styleDiv = {
@@ -32,6 +33,7 @@ function InputBar({
           maxLength={maxLength}
           style={styleInput}
           onChange={handleChange}
+          disabled={isDisabled}
         />
       </div>
     </div>
