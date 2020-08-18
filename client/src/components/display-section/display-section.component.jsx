@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import GameActionButtons from './../game-action-buttons/game-action-buttons.component.jsx';
+// import Timer from './../timer/timer.component.jsx';
+import DisplayHeader from './../display-section-header/display-section-header.component.jsx';
+import DisplayContent from './../display-section-content/display-section-content.component.jsx';
+import DisplayFooter from './../display-section-footer/display-section-footer.component.jsx';
 
 import { setBoardMessage } from '../../redux/game/game.actions';
 
-import {
-  selectCurrentGame,
-  selectBoardMessage,
-} from '../../redux/game/game.selectors';
-
 import './display-section.styles.css';
 
-function DisplaySection({
-  socket,
-  setBoardMessage,
-  currentGame,
-  boardMessage,
-}) {
+function DisplaySection({ socket }) {
   const [startButtonDisabled, setStartButton] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
 
@@ -43,48 +36,23 @@ function DisplaySection({
 
   return (
     <div className="displaySection">
-      <div className="displaySection__header">
-        {currentGame ? (
-          <div className="displaySection__teamName">
-            {currentGame.team.replace('m', 'm ')}
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </div>
-      <div
-        className={`displaySection__contentContainer ${
-          isBlurred ? 'display-blurred' : ''
-        }`}
-      >
-        <h1 className="displaySection__content">{boardMessage}</h1>
-      </div>
+      {/* Display Header */}
+      <DisplayHeader />
 
-      {/* Buttons container */}
-      <div className="displaySection__footer">
-        {currentGame ? (
-          <GameActionButtons />
-        ) : (
-          <button
-            className="displaySection_startButton"
-            onClick={handleStartGameClick}
-            disabled={startButtonDisabled}
-          >
-            Start Game
-          </button>
-        )}
-      </div>
+      {/* Display Content Container */}
+      <DisplayContent isBlurred={isBlurred} />
+
+      {/* Display Footer */}
+      <DisplayFooter
+        handleStartGameClick={handleStartGameClick}
+        startButtonDisabled={startButtonDisabled}
+      />
     </div>
   );
 }
-
-const mapStateToProps = (state) => ({
-  currentGame: selectCurrentGame(state),
-  boardMessage: selectBoardMessage(state),
-});
 
 const mapDispatchToProps = (dispatch) => ({
   setBoardMessage: (message) => dispatch(setBoardMessage(message)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisplaySection);
+export default connect(null, mapDispatchToProps)(DisplaySection);

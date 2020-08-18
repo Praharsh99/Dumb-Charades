@@ -1,0 +1,29 @@
+.displaySection__contentContainer {
+  width: 100%;
+  height: 60%;
+  padding: 10px 20px;
+  font-size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.displaySection__content {
+  text-align: center;
+  animation: fadeIn 1.2s linear;
+}
+
+.display-blurred {
+  user-select: none;
+  filter: blur(12px);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
