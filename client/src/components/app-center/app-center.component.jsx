@@ -8,7 +8,13 @@ import {
   setCurrentGame,
   setBoardMessage,
   setMyTurn,
+  setTimer,
+  toggleActionButtons,
 } from '../../redux/game/game.actions';
+
+import { addNewGameHistoryData } from '../../redux/game-history/history.actions';
+
+import { selectMemoryAsInput } from '../../redux/memory/memory.selectors';
 import { selectMyTurn } from '../../redux/game/game.selectors';
 
 import './app-center.styles.css';
@@ -18,15 +24,28 @@ function AppCenter({
   setCurrentGame,
   myTurn,
   setMyTurn,
+  setMyTimer,
   setBoardMessage,
+  memoryAsInput,
+  addNewGameHistoryData,
+  toggleActionButtonsState,
 }) {
   const [guessWord, setGuessWord] = useState('');
 
   useEffect(() => {
     // Event emmited by the server, occurs when both teams are ready
-    socket.on('setup-game', (game, points) => {
+    socket.on('setup-game', (game, points, history) => {
       setCurrentGame(game, points);
-      setBoardMessage('Game started, wait for your turn!');
+      setBoardMessage(
+        'Game started, wait till the other team sends a word for you to act!'
+      );
+      toggleActionButtonsState(true);
+      setMyTimer('00 : 00');
+
+      if (history) {
+        console.log('Received', history);
+        addNewGameHistoryData(history);
+      }
     });
 
     // Server emits this event to tell us that it's our turn
@@ -41,13 +60,25 @@ function AppCenter({
         let ans = window.confirm(res.message);
         if (ans) {
           socket.emit('confirm-guess-word');
+          setBoardMessage(res.word);
+          toggleActionButtonsState(false);
           setMyTurn();
         }
       } else {
         setBoardMessage(res.message);
       }
     });
+
+    socket.on('timer-ticking', (time) => {
+      setMyTimer(time);
+    });
   }, []);
+
+  useEffect(() => {
+    if (memoryAsInput && myTurn) {
+      setGuessWord(memoryAsInput);
+    }
+  }, [memoryAsInput]);
 
   const handleChange = (e) => {
     setGuessWord(e.target.value);
@@ -87,12 +118,16 @@ function AppCenter({
 
 const mapStateToProps = (state) => ({
   myTurn: selectMyTurn(state),
+  memoryAsInput: selectMemoryAsInput(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentGame: (game, points) => dispatch(setCurrentGame({ game, points })),
   setBoardMessage: (message) => dispatch(setBoardMessage(message)),
   setMyTurn: () => dispatch(setMyTurn()),
+  setMyTimer: (time) => dispatch(setTimer(time)),
+  toggleActionButtonsState: (value) => dispatch(toggleActionButtons(value)),
+  addNewGameHistoryData: (data) => dispatch(addNewGameHistoryData(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppCenter);

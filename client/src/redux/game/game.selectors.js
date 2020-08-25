@@ -14,4 +14,21 @@ export const selectBoardMessage = createSelector(
   (game) => game.boardMessage
 );
 
+export const selectIsPlaying = createSelector(
+  [selectGame],
+  (game) => game.isPlaying
+);
+
 export const selectPoints = createSelector([selectGame], (game) => game.points);
+
+export const selectTimer = createSelector([selectGame], (game) => game.timer);
+
+export const selectActionBtnDisabled = createSelector(
+  [selectGame],
+  (game) => game.actionsButtonsDisabled
+);
+
+export const selectIsBlurred = createSelector(
+  [selectGame],
+  (game) => game.isBlurred
+);

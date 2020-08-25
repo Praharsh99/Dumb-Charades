@@ -6,13 +6,28 @@ import DisplayHeader from './../display-section-header/display-section-header.co
 import DisplayContent from './../display-section-content/display-section-content.component.jsx';
 import DisplayFooter from './../display-section-footer/display-section-footer.component.jsx';
 
-import { setBoardMessage } from '../../redux/game/game.actions';
+import {
+  setBoardMessage,
+  toggleActionButtons,
+  toggleIsBlurred,
+} from '../../redux/game/game.actions';
+
+import {
+  selectBoardMessage,
+  selectIsBlurred,
+} from '../../redux/game/game.selectors';
 
 import './display-section.styles.css';
 
-function DisplaySection({ socket }) {
+function DisplaySection({
+  socket,
+  isBlurred,
+  setBoardMessage,
+  toggleActionButtonsState,
+  toggleIsBlurred,
+  boardMessage,
+}) {
   const [startButtonDisabled, setStartButton] = useState(false);
-  const [isBlurred, setIsBlurred] = useState(false);
 
   useEffect(() => {
     // Event fired when another team is ready, and server send a alert of that
@@ -23,7 +38,28 @@ function DisplaySection({ socket }) {
     // Event fired when another team sends a guess word
     socket.on('received-guess-word', (guessWord) => {
       setBoardMessage(guessWord);
-      setIsBlurred(true);
+      toggleIsBlurred(true);
+      toggleActionButtonsState(false);
+    });
+
+    socket.on('reveal-guess-word', () => {
+      toggleIsBlurred(false);
+    });
+
+    socket.on('response-already-recorded', () => {
+      alert('Response not accepted! 👎🏼');
+    });
+
+    socket.on('game-complete-response', (response) => {
+      const { status, message } = response;
+
+      if (isBlurred) toggleIsBlurred(false);
+
+      if (status) {
+        setBoardMessage(message);
+      } else {
+        alert(message);
+      }
     });
   }, []);
 
@@ -31,7 +67,7 @@ function DisplaySection({ socket }) {
     setStartButton(true);
 
     socket.emit('team-acknowledged');
-    setBoardMessage('Waiting for other team...');
+    setBoardMessage('Waiting for other team... 🙄');
   };
 
   return (
@@ -40,10 +76,11 @@ function DisplaySection({ socket }) {
       <DisplayHeader />
 
       {/* Display Content Container */}
-      <DisplayContent isBlurred={isBlurred} />
+      <DisplayContent />
 
       {/* Display Footer */}
       <DisplayFooter
+        socket={socket}
         handleStartGameClick={handleStartGameClick}
         startButtonDisabled={startButtonDisabled}
       />
@@ -51,8 +88,15 @@ function DisplaySection({ socket }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  setBoardMessage: (message) => dispatch(setBoardMessage(message)),
+const mapStateToProps = (state) => ({
+  boardMessage: selectBoardMessage(state),
+  isBlurred: selectIsBlurred(state),
 });
 
-export default connect(null, mapDispatchToProps)(DisplaySection);
+const mapDispatchToProps = (dispatch) => ({
+  setBoardMessage: (message) => dispatch(setBoardMessage(message)),
+  toggleActionButtonsState: (value) => dispatch(toggleActionButtons(value)),
+  toggleIsBlurred: (value) => dispatch(toggleIsBlurred(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DisplaySection);

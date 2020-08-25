@@ -6,3 +6,8 @@ export const selectMemoryWords = createSelector(
   [selectMemory],
   (memory) => memory.words
 );
+
+export const selectMemoryAsInput = createSelector(
+  [selectMemory],
+  (memory) => memory.memoryAsInput
+);

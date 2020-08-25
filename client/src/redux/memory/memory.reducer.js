@@ -2,6 +2,7 @@ import MemoryActionTypes from './memory.types';
 
 const INITIAL_STATE = {
   words: [],
+  memoryAsInput: null,
 };
 
 const memoryReducer = (state = INITIAL_STATE, action) => {
@@ -10,6 +11,12 @@ const memoryReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         words: [...state.words, action.payload],
+      };
+
+    case MemoryActionTypes.SET_MEMORY_AS_INPUT:
+      return {
+        ...state,
+        memoryAsInput: action.payload,
       };
 
     default:

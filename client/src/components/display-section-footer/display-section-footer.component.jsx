@@ -8,6 +8,7 @@ import { selectCurrentGame } from '../../redux/game/game.selectors';
 import './display-section-footer.style.css';
 
 function DisplayFooter({
+  socket,
   currentGame,
   handleStartGameClick,
   startButtonDisabled,
@@ -15,7 +16,7 @@ function DisplayFooter({
   return (
     <div className="displaySection__footer">
       {currentGame ? (
-        <GameActionButtons />
+        <GameActionButtons socket={socket} />
       ) : (
         <button
           className="displaySection_startButton"

@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { selectBoardMessage } from '../../redux/game/game.selectors';
+import {
+  selectBoardMessage,
+  selectIsBlurred,
+} from '../../redux/game/game.selectors';
 
 import './display-section-content.style.css';
 
-function DisplayContent({ isBlurred, boardMessage, setBoardMessage }) {
+function DisplayContent({ isBlurred, boardMessage }) {
   return (
     <div
       className={`displaySection__contentContainer ${
@@ -19,6 +22,7 @@ function DisplayContent({ isBlurred, boardMessage, setBoardMessage }) {
 
 const mapStateToProps = (state) => ({
   boardMessage: selectBoardMessage(state),
+  isBlurred: selectIsBlurred(state),
 });
 
 export default connect(mapStateToProps)(DisplayContent);

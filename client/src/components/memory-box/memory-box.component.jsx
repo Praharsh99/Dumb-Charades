@@ -3,18 +3,25 @@ import { connect } from 'react-redux';
 
 import BlurredBox from './../blurred-box/blurred-box.component.jsx';
 
-import { setNewMemoryWord } from './../../redux/memory/memory.actions';
+import {
+  setNewMemoryWord,
+  setMemoryAsInput,
+} from './../../redux/memory/memory.actions';
 import { selectMemoryWords } from './../../redux/memory/memory.selectors';
 
 import './memory-box.styles.css';
 
-function MemoryBox({ setNewMemoryWord, words }) {
+function MemoryBox({ setNewMemoryWord, setMemoryAsInput, words }) {
   const [word, setWord] = useState('');
   const wordsContainer = useRef(null);
 
   useEffect(() => {
     wordsContainer.current.scrollTo(0, wordsContainer.current.scrollHeight);
   });
+
+  const handleClick = (e) => {
+    setMemoryAsInput(e.target.id);
+  };
 
   const handleChange = (e) => {
     setWord(e.target.value);
@@ -50,7 +57,12 @@ function MemoryBox({ setNewMemoryWord, words }) {
         <div className="memoryBox__wordsContainer" ref={wordsContainer}>
           {words.length ? (
             words.map((word, idx) => (
-              <div className="memoryBox__word" key={idx}>
+              <div
+                className="memoryBox__word"
+                id={word}
+                key={idx}
+                onClick={handleClick}
+              >
                 <span>{word}</span>
               </div>
             ))
@@ -69,6 +81,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setNewMemoryWord: (word) => dispatch(setNewMemoryWord(word)),
+  setMemoryAsInput: (word) => dispatch(setMemoryAsInput(word)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MemoryBox);

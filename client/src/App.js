@@ -15,6 +15,10 @@ const socket = io.connect('http://localhost:8000');
 function App() {
   useEffect(() => {
     socket.emit('new-connection');
+
+    socket.on('team-disconnect', () => {
+      window.location.reload();
+    });
   }, []);
 
   return (
