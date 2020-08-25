@@ -10,7 +10,7 @@ import AppRight from './components/app-right/app-right.component.jsx';
 import './App.css';
 
 // Socket initialization
-const socket = io.connect('http://localhost:8000');
+const socket = io.connect('https://dumb-charades-praharsh.herokuapp.com/');
 
 function App() {
   useEffect(() => {
