@@ -349,5 +349,6 @@ exports.disconnectUser = () => {
 
     GameData.userCount = 0;
     GameData.hasGameStarted = false;
+    // console.log('Teams: ', teamData, GameData);
   }
 };
